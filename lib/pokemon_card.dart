@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokeapp/pokemon_data.dart';
+import 'package:pokeapp/pokemon.dart';
 
 class PokemonCard extends StatelessWidget {
   const PokemonCard({

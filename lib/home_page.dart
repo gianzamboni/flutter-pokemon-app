@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokeapp/app_bar_title.dart';
 import 'package:pokeapp/pokemon_card.dart';
-import 'package:pokeapp/pokemon_data.dart';
+import 'package:pokeapp/pokemon_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -14,13 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  List<Pokemon> pokemons = [
-    Pokemon("charmander", PokemonTypes.fire),
-    Pokemon("vaporeon", PokemonTypes.water),
-    Pokemon("mew", PokemonTypes.psychic),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +24,7 @@ class _HomePageState extends State<HomePage> {
       body: DecoratedBox(
         decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
         child: Center(
-          child: Column(
+          child: ListView(
             children: pokemons.map((pokemon) {
               return PokemonCard(pokemon: pokemon);
           }).toList(),

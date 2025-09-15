@@ -19,31 +19,38 @@ class PokemonCard extends StatefulWidget {
 }
 
 class _PokemonCardState extends State<PokemonCard> {
-  bool showShinny = false;
+  
+  PokemonState currentState = PokemonState.normal;
 
-  void showSnackBar(BuildContext context) {
+  void showSnackBar(BuildContext context, PokemonState state) {
     final snackBar = SnackBar(
-      content: Text('Pokemon does not have a shinny version!'),
+      content: Text('Pokemon does not have a ${state.name} version!'),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  void updateCurrentPokemonState(PokemonState newState) {
+    var state = currentState == newState ? PokemonState.normal : newState;
+    if (!widget.pokemon.hasState(state)) {
+      showSnackBar(context, newState);
+      return;
+    } else {
+      setState(() {
+        currentState = state;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    String pokemonImagePath = showShinny
-        ? widget.pokemon.imageShiny()
-        : widget.pokemon.image();
+    String pokemonImagePath = widget.pokemon.image(state: currentState);
 
     return GestureDetector(
       onTap: () {
-        if (!widget.pokemon.hasShinyVersion && !showShinny) {
-          showSnackBar(context);
-          return;
-        } else {
-          setState(() {
-            showShinny = !showShinny;
-          });
-        }
+       updateCurrentPokemonState(PokemonState.shiny);
+      },
+      onDoubleTap: () {
+        updateCurrentPokemonState(PokemonState.evolved);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),

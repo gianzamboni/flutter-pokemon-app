@@ -9,20 +9,40 @@ enum PokemonTypes {
   normal
 }
 
+enum PokemonState {
+  normal,
+  shiny,
+  evolved;
+  
+}
+
 class Pokemon {
 
   String name;
   PokemonTypes type; 
-  bool hasShinyVersion;
+  final Map<PokemonState, bool> availableStates;
 
-  Pokemon(this.name, this.type, {this.hasShinyVersion = false});
+  Pokemon(this.name, this.type, {final hasShinyVersion = false, final hasEvolution = false}) :
+    availableStates = {
+      PokemonState.normal: true,
+      PokemonState.shiny: hasShinyVersion,
+      PokemonState.evolved: hasEvolution
+    };
 
   String get capitalizedName {
     return "${name[0].toUpperCase()}${name.substring(1).toLowerCase()}";
   }
 
-  String image() {
-    return "assets/img/${name.toLowerCase()}.png";
+  bool hasState(PokemonState state) {
+    return availableStates[state] ?? false;
+  }
+
+  String image({PokemonState state = PokemonState.normal}) {
+    return switch(state) {
+      PokemonState.normal => "assets/img/${name.toLowerCase()}.png",
+      PokemonState.shiny => "assets/img/${name.toLowerCase()}-shiny.png",
+      PokemonState.evolved => "assets/img/${name.toLowerCase()}-evolved.png",
+    };
   }
 
   String imageShiny() {

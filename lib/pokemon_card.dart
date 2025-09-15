@@ -19,21 +19,31 @@ class PokemonCard extends StatefulWidget {
 }
 
 class _PokemonCardState extends State<PokemonCard> {
-
   bool showShinny = false;
-  Image? pokemonImage;
+
+  void showSnackBar(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text('Pokemon does not have a shinny version!'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    const snackBar = SnackBar(content: Text('Pokemon does not have a shinny version!'));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    String pokemonImagePath = showShinny
+        ? widget.pokemon.imageShiny()
+        : widget.pokemon.image();
 
     return GestureDetector(
       onTap: () {
-        setState(() {
-          showShinny = !showShinny;
-        });
+        if (!widget.pokemon.hasShinyVersion && !showShinny) {
+          showSnackBar(context);
+          return;
+        } else {
+          setState(() {
+            showShinny = !showShinny;
+          });
+        }
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -46,7 +56,10 @@ class _PokemonCardState extends State<PokemonCard> {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 30.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 15.0,
+              vertical: 30.0,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -71,8 +84,15 @@ class _PokemonCardState extends State<PokemonCard> {
                   ],
                 ),
                 SizedBox(
-                  height: 150,
-                  child: pokemonImage,
+                  height: 162,  
+                  width: 162,
+                  child: Image.asset(
+                    pokemonImagePath,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, object, s) {
+                      return Placeholder(); // Cambiar error image
+                    },
+                  ),
                 ),
               ],
             ),

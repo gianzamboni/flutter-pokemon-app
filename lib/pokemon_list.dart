@@ -2,7 +2,7 @@ import 'package:pokeapp/pokemon.dart';
 
 List<Pokemon> pokemons = [
     Pokemon("charmander", PokemonTypes.fire),
-    Pokemon("vaporeon", PokemonTypes.water),
+    Pokemon("vaporeon", PokemonTypes.water, hasShinyVersion: true),
     Pokemon("mew", PokemonTypes.psychic),
     Pokemon("bayleef", PokemonTypes.plant),
     Pokemon("gothitelle", PokemonTypes.psychic),

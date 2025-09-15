@@ -8,11 +8,13 @@ class PokemonCard extends StatefulWidget {
     required this.pokemon,
     required this.index,
     required this.moveCallback,
+    required this.mainAxisFlow,
   });
 
   final Pokemon pokemon;
   final int index;
   final Function(int, MoveDirection) moveCallback;
+  final Axis mainAxisFlow;
 
   @override
   State<PokemonCard> createState() => _PokemonCardState();
@@ -21,7 +23,6 @@ class PokemonCard extends StatefulWidget {
 class _PokemonCardState extends State<PokemonCard> {
   
   PokemonState currentState = PokemonState.normal;
-
   void showSnackBar(BuildContext context, PokemonState state) {
     final snackBar = SnackBar(
       content: Text('Pokemon does not have a ${state.name} version!'),
@@ -67,16 +68,19 @@ class _PokemonCardState extends State<PokemonCard> {
               horizontal: 15.0,
               vertical: 30.0,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            child: Flex(
+              direction: widget.mainAxisFlow == Axis.horizontal ? Axis.vertical : Axis.horizontal,
+              mainAxisAlignment: widget.mainAxisFlow == Axis.horizontal ? MainAxisAlignment.center : MainAxisAlignment.spaceAround,
               children: [
-                Column(
+                Flex(
+                  direction: widget.mainAxisFlow,
+                  spacing: 10,
                   children: [
                     ElevatedButton(
                       onPressed: () {
                         widget.moveCallback(widget.index, MoveDirection.up);
                       },
-                      child: Icon(Icons.arrow_upward),
+                      child: Icon(widget.mainAxisFlow == Axis.horizontal ? Icons.arrow_back : Icons.arrow_upward),
                     ),
                     Text(
                       widget.pokemon.capitalizedName,
@@ -86,7 +90,7 @@ class _PokemonCardState extends State<PokemonCard> {
                       onPressed: () {
                         widget.moveCallback(widget.index, MoveDirection.down);
                       },
-                      child: Icon(Icons.arrow_downward),
+                      child: Icon(widget.mainAxisFlow == Axis.horizontal ? Icons.arrow_forward : Icons.arrow_downward),
                     ),
                   ],
                 ),

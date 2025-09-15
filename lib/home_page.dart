@@ -14,7 +14,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  
   var pokemonList = pokemons;
+  var orientation = Axis.vertical;
 
   void move(int index, MoveDirection direction) {
     setState(() {
@@ -38,15 +40,22 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: AppBarTitle(title: widget.title),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        setState(() {
+          orientation = orientation == Axis.horizontal ? Axis.vertical : Axis.horizontal;
+        });
+      }, child: Icon(Icons.screen_rotation_alt),),
       body: DecoratedBox(
         decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
         child: Center(
           child: ListView(
+            scrollDirection: orientation,
             children: [...pokemons.asMap().entries.map((entry) {
               return PokemonCard(
                 pokemon: entry.value,
                 index: entry.key,
                 moveCallback: move,
+                mainAxisFlow: orientation,
               );
             })],
         ),

@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/widgets.dart';
 
 enum PokemonTypes {
   fire,
@@ -19,8 +19,9 @@ class Pokemon {
     return "${name[0].toUpperCase()}${name.substring(1).toLowerCase()}";
   }
 
-  String get image {
-    return "assets/img/${name.toLowerCase()}.png";
+  Image image({bool shinny = false}) {
+    final path = "assets/img/${name.toLowerCase()}${shinny ? "" : "-shinny"}.png";
+    return Image.asset(path, fit: BoxFit.contain);
   }
 
   Color typeColor(Brightness theme) {

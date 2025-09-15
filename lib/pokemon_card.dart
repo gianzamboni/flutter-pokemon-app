@@ -24,8 +24,9 @@ class _PokemonCardState extends State<PokemonCard> {
   
   PokemonState currentState = PokemonState.normal;
   void showSnackBar(BuildContext context, PokemonState state) {
+    final article = state.name.startsWith(RegExp("(a|e|i|o|u)"))? "an" : "a";
     final snackBar = SnackBar(
-      content: Text('${widget.pokemon.capitalizedName} does not have a ${state.name} version!'),
+      content: Text('${widget.pokemon.capitalizedName} does not have $article ${state.name} version!'),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }

@@ -41,12 +41,8 @@ class Pokemon {
     return switch(state) {
       PokemonState.normal => "assets/img/${name.toLowerCase()}.png",
       PokemonState.shiny => "assets/img/${name.toLowerCase()}-shiny.png",
-      PokemonState.evolved => "assets/img/${name.toLowerCase()}-evolved.png",
+      PokemonState.evolved => "assets/img/${name.toLowerCase()}-evolution.png",
     };
-  }
-
-  String imageShiny() {
-    return "assets/img/${name.toLowerCase()}-shiny.png";
   }
 
   Color typeColor(Brightness theme) {

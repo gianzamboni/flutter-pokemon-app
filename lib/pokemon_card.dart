@@ -25,7 +25,7 @@ class _PokemonCardState extends State<PokemonCard> {
   PokemonState currentState = PokemonState.normal;
   void showSnackBar(BuildContext context, PokemonState state) {
     final snackBar = SnackBar(
-      content: Text('Pokemon does not have a ${state.name} version!'),
+      content: Text('${widget.pokemon.capitalizedName} does not have a ${state.name} version!'),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -70,7 +70,7 @@ class _PokemonCardState extends State<PokemonCard> {
             ),
             child: Flex(
               direction: widget.mainAxisFlow == Axis.horizontal ? Axis.vertical : Axis.horizontal,
-              mainAxisAlignment: widget.mainAxisFlow == Axis.horizontal ? MainAxisAlignment.center : MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Flex(
                   direction: widget.mainAxisFlow,

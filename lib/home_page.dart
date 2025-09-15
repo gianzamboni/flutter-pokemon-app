@@ -40,26 +40,35 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: AppBarTitle(title: widget.title),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        setState(() {
-          orientation = orientation == Axis.horizontal ? Axis.vertical : Axis.horizontal;
-        });
-      }, child: Icon(Icons.screen_rotation_alt),),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            orientation = orientation == Axis.horizontal
+                ? Axis.vertical
+                : Axis.horizontal;
+          });
+        },
+        child: Icon(Icons.screen_rotation_alt),
+      ),
       body: DecoratedBox(
         decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
-        child: Center(
+        child: Center(child: SizedBox(
+          height: orientation == Axis.horizontal ? 350 : null,
           child: ListView(
-            scrollDirection: orientation,
-            children: [...pokemons.asMap().entries.map((entry) {
-              return PokemonCard(
-                pokemon: entry.value,
-                index: entry.key,
-                moveCallback: move,
-                mainAxisFlow: orientation,
-              );
-            })],
-        ),
+      scrollDirection: orientation,
+      children: [
+        ...pokemons.asMap().entries.map((entry) {
+          return PokemonCard(
+            pokemon: entry.value,
+            index: entry.key,
+            moveCallback: move,
+            mainAxisFlow: orientation,
+          );
+        }),
+      ],
+    )
+        )),
       ),
-    ));
+    );
   }
 }

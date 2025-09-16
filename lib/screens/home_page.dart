@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokeapp/app_bar_title.dart';
+import 'package:pokeapp/app_drawer.dart';
 import 'package:pokeapp/pokemons/move_direction.dart';
 import 'package:pokeapp/pokemons/pokemon_card.dart';
 import 'package:pokeapp/pokemons/pokemon_list.dart';
@@ -40,6 +41,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: AppBarTitle(title: widget.title),
       ),
+      drawer: AppDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {

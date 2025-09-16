@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:pokeapp/themes/pokemon_theme_extension.dart';
 
 enum PokemonTypes {
@@ -28,13 +27,21 @@ enum PokemonState {
   normal,
   shiny,
   evolved;
-  
+
+  String imagePath(String pokemonName) {
+    return switch(this) {
+      PokemonState.normal => "assets/img/${pokemonName.toLowerCase()}.png",
+      PokemonState.shiny => "assets/img/${pokemonName.toLowerCase()}-shiny.png",
+      PokemonState.evolved => "assets/img/${pokemonName.toLowerCase()}-evolution.png",
+    };
+  }
 }
 
+@immutable
 class Pokemon {
 
-  String name;
-  PokemonTypes type; 
+  final String name;
+  final PokemonTypes type; 
   final Map<PokemonState, bool> availableStates;
 
   Pokemon(this.name, this.type, {final hasShinyVersion = false, final hasEvolution = false}) :
@@ -53,10 +60,6 @@ class Pokemon {
   }
 
   String image({PokemonState state = PokemonState.normal}) {
-    return switch(state) {
-      PokemonState.normal => "assets/img/${name.toLowerCase()}.png",
-      PokemonState.shiny => "assets/img/${name.toLowerCase()}-shiny.png",
-      PokemonState.evolved => "assets/img/${name.toLowerCase()}-evolution.png",
-    };
+    return state.imagePath(name);
   }
 }

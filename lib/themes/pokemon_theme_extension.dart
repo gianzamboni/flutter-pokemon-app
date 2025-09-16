@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pokeapp/pokemons/pokemon.dart';
 
 @immutable
 class PokemonColors extends ThemeExtension<PokemonColors> {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pokeapp/move_direction.dart';
-import 'package:pokeapp/pokemon.dart';
+import 'package:pokeapp/pokemons/move_direction.dart';
+import 'package:pokeapp/pokemons/pokemon.dart';
+import 'package:pokeapp/themes/pokemon_theme_extension.dart';
 
 class PokemonCard extends StatefulWidget {
   const PokemonCard({
@@ -47,6 +48,8 @@ class _PokemonCardState extends State<PokemonCard> {
   Widget build(BuildContext context) {
     String pokemonImagePath = widget.pokemon.image(state: currentState);
 
+    final pokemonColors = Theme.of(context).extension<PokemonColors>();
+
     return GestureDetector(
       onTap: () {
        updateCurrentPokemonState(PokemonState.shiny);
@@ -58,7 +61,7 @@ class _PokemonCardState extends State<PokemonCard> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: widget.pokemon.typeColor(Theme.of(context).brightness),
+            color: widget.pokemon.type.themeColor(context),
             borderRadius: const BorderRadius.all(Radius.circular(8)),
             boxShadow: [
               BoxShadow(color: Colors.black.withAlpha(51), blurRadius: 10),

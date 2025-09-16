@@ -1,4 +1,4 @@
-import 'package:pokeapp/pokemon.dart';
+import 'package:pokeapp/pokemons/pokemon.dart';
 
 List<Pokemon> pokemons = [
     Pokemon("charmander", PokemonTypes.fire, hasShinyVersion: true, hasEvolution: true),

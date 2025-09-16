@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokeapp/app_bar_title.dart';
-import 'package:pokeapp/move_direction.dart';
-import 'package:pokeapp/pokemon_card.dart';
-import 'package:pokeapp/pokemon_list.dart';
+import 'package:pokeapp/pokemons/move_direction.dart';
+import 'package:pokeapp/pokemons/pokemon_card.dart';
+import 'package:pokeapp/pokemons/pokemon_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});

@@ -1,9 +1,15 @@
 import 'dart:ui';
 
 enum PokemonTypes {
-  fire,
-  water,
-  psychic
+  fire(color: Color(0xffff7f00)),
+  water(color: Color(0xffff7f00)),
+  psychic(color: Color(0xffff7f00));
+
+  final Color color;
+
+  const PokemonTypes({
+    required this.color
+  });
 }
 
 class Pokemon {

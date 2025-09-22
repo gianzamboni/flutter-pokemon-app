@@ -5,10 +5,15 @@ import 'package:pokeapp/themes/light_theme.dart';
 import 'package:pokeapp/themes/dark_theme.dart';
 
 void main() {
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+  };
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   const MyApp({super.key});
 
   // This widget is the root of your application.

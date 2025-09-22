@@ -6,6 +6,7 @@ final darkTheme = ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.dark(
           primary: Colors.red.shade900,
+          secondary:  Colors.yellow,
           surface: Colors.grey.shade900
 
         ),

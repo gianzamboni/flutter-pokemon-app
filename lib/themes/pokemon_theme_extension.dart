@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 @immutable
 class PokemonColors extends ThemeExtension<PokemonColors> {
 
-  final Color? fire;
-  final Color? water;
-  final Color? plant;
-  final Color? psychic;
-  final Color? fight;
-  final Color? normal;
+  final Color fire;
+  final Color water;
+  final Color plant;
+  final Color psychic;
+  final Color fight;
+  final Color normal;
 
   const PokemonColors({
-    this.fire,
-    this.water,
-    this.plant,
-    this.psychic,
-    this.fight,
-    this.normal,
+    required this.fire,
+    required this.water,
+    required this.plant,
+    required this.psychic,
+    required this.fight,
+    required this.normal,
   });
 
   @override
@@ -44,12 +44,12 @@ class PokemonColors extends ThemeExtension<PokemonColors> {
       return this;
     }
     return PokemonColors(
-      fire: Color.lerp(fire, other.fire, t),
-      water: Color.lerp(water, other.water, t),
-      plant: Color.lerp(plant, other.plant, t),
-      psychic: Color.lerp(psychic, other.psychic, t),
-      fight: Color.lerp(fight, other.fight, t),
-      normal: Color.lerp(normal, other.normal, t),
+      fire: Color.lerp(fire, other.fire, t) ?? fire,
+      water: Color.lerp(water, other.water, t) ?? water,
+      plant: Color.lerp(plant, other.plant, t) ?? plant,
+      psychic: Color.lerp(psychic, other.psychic, t) ?? psychic,
+      fight: Color.lerp(fight, other.fight, t) ?? fight,
+      normal: Color.lerp(normal, other.normal, t) ?? normal,
     );
   }
 

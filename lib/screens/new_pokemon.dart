@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pokeapp/app_bar_title.dart';
 import 'package:pokeapp/app_drawer.dart';
+import 'package:pokeapp/screens/new_pokemon/new_pokemon_form.dart';
 
 class NewPokemon extends StatefulWidget {
   const NewPokemon({super.key});
@@ -13,8 +15,12 @@ class _NewPokemonState extends State<NewPokemon> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: AppDrawer(),
-      appBar: AppBar(title: const Text("Nuevo Pokémon")),
-      body: const Placeholder()
+      appBar: pokeAppBar("Nuevo Pokemon", context, showIcon: false),
+      body: Padding(
+        padding: const EdgeInsets.all(48),
+        child: NewPokemonForm(),
+      )
     );
   }
 }
+

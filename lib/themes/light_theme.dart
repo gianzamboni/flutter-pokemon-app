@@ -6,6 +6,7 @@ final lightTheme = ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.light(
         primary: Colors.red,
+        secondary:  const Color(0xffc2ae00),
         surface: Colors.grey.shade100
         ),
       textTheme: textTheme,

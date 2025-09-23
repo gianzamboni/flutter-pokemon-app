@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:pokeapp/app_bar_title.dart';
-import 'package:pokeapp/pokemons/move_direction.dart';
-import 'package:pokeapp/pokemons/pokemon_card.dart';
-import 'package:pokeapp/pokemons/pokemon_list.dart';
+import 'package:pokeapp/app_drawer.dart';
+import 'package:pokeapp/models/move_direction.dart';
+import 'package:pokeapp/screens/home/pokemon_card.dart';
+import 'package:pokeapp/screens/home/pokemon_list.dart';
+
+import '../models/pokemon.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
+
+  const HomePage({super.key, required this.title, this.pokemons});
 
   final String title;
-
+  final List<Pokemon>? pokemons;
+  
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -19,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   var orientation = Axis.vertical;
 
   void move(int index, MoveDirection direction) {
-    setState(() {
+
       if (direction == MoveDirection.up && index > 0) {
         var temp = pokemonList[index - 1];
         pokemonList[index - 1] = pokemonList[index];
@@ -30,16 +35,14 @@ class _HomePageState extends State<HomePage> {
         pokemonList[index + 1] = pokemonList[index];
         pokemonList[index] = temp;
       }
-    });
+      setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: AppBarTitle(title: widget.title),
-      ),
+      appBar: pokeAppBar("Pokeapp", context),
+      drawer: AppDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {

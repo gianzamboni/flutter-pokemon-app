@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pokeapp/pokemons/move_direction.dart';
-import 'package:pokeapp/pokemons/pokemon.dart';
-import 'package:pokeapp/themes/pokemon_theme_extension.dart';
+
+import '../../models/move_direction.dart';
+import '../../models/pokemon.dart';
+import '../../models/pokemon_states.dart';
 
 class PokemonCard extends StatefulWidget {
   const PokemonCard({
@@ -24,6 +25,7 @@ class PokemonCard extends StatefulWidget {
 class _PokemonCardState extends State<PokemonCard> {
   
   PokemonState currentState = PokemonState.normal;
+  
   void showSnackBar(BuildContext context, PokemonState state) {
     final article = state.name.startsWith(RegExp("(a|e|i|o|u)"))? "an" : "a";
     final snackBar = SnackBar(
@@ -47,8 +49,6 @@ class _PokemonCardState extends State<PokemonCard> {
   @override
   Widget build(BuildContext context) {
     String pokemonImagePath = widget.pokemon.image(state: currentState);
-
-    final pokemonColors = Theme.of(context).extension<PokemonColors>();
 
     return GestureDetector(
       onTap: () {

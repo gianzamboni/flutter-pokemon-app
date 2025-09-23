@@ -1,4 +1,3 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:pokeapp/models/api_pokemon.dart';
 import 'package:pokeapp/services/poke_api.dart';
@@ -50,9 +49,6 @@ class _NewPokemonFormState extends State<NewPokemonForm> {
   final _formKey = GlobalKey<FormState>();
   final _pokemonNameController = TextEditingController();
 
-  final _pokemonImgUrlController = TextEditingController();
-  final _pokemonImgUrlFocusNode = FocusNode();
-
   bool _isValidForm = false;
 
   late Future<List<ApiPokemon>> pokemonList;
@@ -92,8 +88,7 @@ class _NewPokemonFormState extends State<NewPokemonForm> {
                 if(asyncSnapshot.hasError) {
                   return Text("Could not load pokemon list");
                 } else if(asyncSnapshot.hasData) {
-                  final pokemonList = asyncSnapshot.data!;
-                  return PokemonSearch(pokemonList: pokemonList, pokemonNameController: _pokemonNameController, pokemonImgUrlFocusNode: _pokemonImgUrlFocusNode);
+                  return Placeholder();
                 }
 
                 return const CircularProgressIndicator();
@@ -118,23 +113,5 @@ class _NewPokemonFormState extends State<NewPokemonForm> {
           ],
         )
     );
-  }
-}
-
-class PokemonSearch extends StatelessWidget {
-  const PokemonSearch({
-    super.key,
-    required this.pokemonList,
-    required TextEditingController pokemonNameController,
-    required FocusNode pokemonImgUrlFocusNode,
-  }) : _pokemonNameController = pokemonNameController, _pokemonImgUrlFocusNode = pokemonImgUrlFocusNode;
-
-  final List<ApiPokemon> pokemonList;
-  final TextEditingController _pokemonNameController;
-  final FocusNode _pokemonImgUrlFocusNode;
-
-  @override
-  Widget build(BuildContext context) {
-    return Placeholder();
   }
 }

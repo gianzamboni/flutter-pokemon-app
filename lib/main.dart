@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:pokeapp/screens/home_page.dart';
-import 'package:pokeapp/screens/new_pokemon.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pokeapp/screens/home/home_page.dart';
+import 'package:pokeapp/screens/new_pokemon/new_pokemon_form.dart';
 import 'package:pokeapp/themes/light_theme.dart';
 import 'package:pokeapp/themes/dark_theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
+  
   FlutterError.onError = (details) {
     FlutterError.presentError(details);
   };
 
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -20,10 +25,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Poke App',
+      title: 'Poke App',  
       routes: {
-        '/' : (context) => HomePage(title: "Poke App"),
-        '/new-pokemon': (context) => NewPokemon(),
+        '/' : (context) => HomePage(),
+        '/new-pokemon': (context) => NewPokemonForm(),
       },
       themeMode: ThemeMode.system,
       darkTheme: darkTheme,

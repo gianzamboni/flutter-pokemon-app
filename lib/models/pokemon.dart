@@ -6,27 +6,39 @@ import 'package:pokeapp/models/pokemon_types.dart';
 @immutable
 class Pokemon {
 
-  final String name;
-  final PokemonTypes type; 
-  final Map<PokemonState, bool> availableStates;
+  final int _id;
+  final String _name;
+  final PokemonTypes _type; 
+  final Map<PokemonState, String?> _images;
 
-  Pokemon(this.name, this.type, {final hasShinyVersion = false, final hasEvolution = false}) :
-    availableStates = {
-      PokemonState.normal: true,
-      PokemonState.shiny: hasShinyVersion,
-      PokemonState.evolved: hasEvolution
-    };
+
+  Pokemon(this._id, this._name, this._type, { required String imageUrl, String? shinyUrl }) :
+      _images = {
+        PokemonState.normal: imageUrl,
+        PokemonState.shiny: shinyUrl,
+      };
+
+  factory Pokemon.fromJson(Map<String, dynamic> json) {
+    final type = PokemonTypes.values.byName(json['type']['name'].toLowerCase());
+    return Pokemon(json['id'], json['name'], type, imageUrl: json['picture'], shinyUrl: json['shinyPicture']);
+  }
 
   String get capitalizedName {
-    return "${name[0].toUpperCase()}${name.substring(1).toLowerCase()}";
+    return "${_name[0].toUpperCase()}${_name.substring(1).toLowerCase()}";
   }
 
   bool hasState(PokemonState state) {
-    return availableStates[state] ?? false;
+    return _images.containsKey(state) && _images[state] != null;
   }
 
   String image({PokemonState state = PokemonState.normal}) {
-    return state.imagePath(name);
+    if (!hasState(state)) {
+      throw Exception("Image for state $state not found");
+    }
+    return _images[state]!;
   }
 
+  Color? themeColor(BuildContext context) {
+    return _type.themeColor(context);
+  }
 }

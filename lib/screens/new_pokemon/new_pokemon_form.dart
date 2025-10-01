@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokeapp/models/api_pokemon.dart';
-import 'package:pokeapp/services/poke_api.dart';
+import 'package:pokeapp/models/pokemon.dart';
 
 class NewPokemonForm extends StatefulWidget {
   const NewPokemonForm({super.key});
@@ -51,12 +50,12 @@ class _NewPokemonFormState extends State<NewPokemonForm> {
 
   bool _isValidForm = false;
 
-  late Future<List<ApiPokemon>> pokemonList;
+  late Future<List<Pokemon>> pokemonList;
 
   @override
   void initState() {
     super.initState();
-    pokemonList = PokeApi.getAllNames();
+  //  pokemonList = PokeApi.getAllNames();
   }
 
   @override
@@ -82,7 +81,7 @@ class _NewPokemonFormState extends State<NewPokemonForm> {
         child: Column(
           spacing: 32,
           children: [
-            FutureBuilder<List<ApiPokemon>>(
+            FutureBuilder<List<Pokemon>>(
               future: pokemonList,
               builder: (context, asyncSnapshot) {
                 if(asyncSnapshot.hasError) {

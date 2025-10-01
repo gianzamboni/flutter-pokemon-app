@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../models/move_direction.dart';
 import '../../models/pokemon.dart';
 import '../../models/pokemon_states.dart';
 
@@ -9,13 +8,11 @@ class PokemonCard extends StatefulWidget {
     super.key,
     required this.pokemon,
     required this.index,
-    required this.moveCallback,
     required this.mainAxisFlow,
   });
 
   final Pokemon pokemon;
   final int index;
-  final Function(int, MoveDirection) moveCallback;
   final Axis mainAxisFlow;
 
   @override
@@ -54,14 +51,11 @@ class _PokemonCardState extends State<PokemonCard> {
       onTap: () {
        updateCurrentPokemonState(PokemonState.shiny);
       },
-      onDoubleTap: () {
-        updateCurrentPokemonState(PokemonState.evolved);
-      },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: widget.pokemon.type.themeColor(context),
+            color: widget.pokemon.themeColor(context),
             borderRadius: const BorderRadius.all(Radius.circular(8)),
             boxShadow: [
               BoxShadow(color: Colors.black.withAlpha(51), blurRadius: 10),
@@ -82,7 +76,7 @@ class _PokemonCardState extends State<PokemonCard> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        widget.moveCallback(widget.index, MoveDirection.up);
+                       // widget.moveCallback(widget.index, MoveDirection.up);
                       },
                       child: Icon(widget.mainAxisFlow == Axis.horizontal ? Icons.arrow_back : Icons.arrow_upward),
                     ),
@@ -92,7 +86,7 @@ class _PokemonCardState extends State<PokemonCard> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        widget.moveCallback(widget.index, MoveDirection.down);
+                       // widget.moveCallback(widget.index, MoveDirection.down);
                       },
                       child: Icon(widget.mainAxisFlow == Axis.horizontal ? Icons.arrow_forward : Icons.arrow_downward),
                     ),

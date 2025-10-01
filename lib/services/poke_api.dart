@@ -1,21 +1,20 @@
+
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:pokeapp/models/pokemon.dart';
 
-import '../models/api_pokemon.dart';
 
 class PokeApi {
-  static final _baseUrl = "https://pokeapi.co/api/v2";
+  static final  String _baseUrl = dotenv.env['POKEAPI_BASE_URL'] ?? "http://10.0.2.2:8080";
 
-  static Future<List<ApiPokemon>> getAllNames() async {
-    var url = Uri.parse("$_baseUrl/pokemon?limit=2000");
-    var response = await http.get(url);
-    if (response.statusCode == 200) {
-      var body = jsonDecode(response.body)["results"];
-      var pokemonList = body.map<ApiPokemon>((json) => ApiPokemon.fromJson(json)).toList();
-      return pokemonList;
-    } else {
-      throw Exception("Failed to fetch pokemon names");
-    }
+  static Future<List<Pokemon>> getPokemons(List<int> ids) async {
+    final url = Uri.parse("$_baseUrl/pokemon?ids=${ids.join(",")}");
+    print(url);
+    final response = await http.get(url);
+    print(response.body);
+    final json = jsonDecode(response.body);
+    return json.map((e) => Pokemon.fromJson(e)).toList();
   }
 }

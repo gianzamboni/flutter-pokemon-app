@@ -1,4 +1,1 @@
-enum PokemonState {
-  normal,
-  shiny;
-}
+enum PokemonState { normal, shiny }

@@ -6,18 +6,17 @@ enum PokemonTypes {
   fire,
   water,
   psychic,
-  plant,
+  grass,
   fight,
   normal;
 
-
   Color? themeColor(BuildContext context) {
     final pokemonColors = Theme.of(context).extension<PokemonColors>();
-    return switch(this) {
+    return switch (this) {
       PokemonTypes.fire => pokemonColors?.fire,
       PokemonTypes.water => pokemonColors?.water,
       PokemonTypes.psychic => pokemonColors?.psychic,
-      PokemonTypes.plant => pokemonColors?.plant,
+      PokemonTypes.grass => pokemonColors?.grass,
       PokemonTypes.fight => pokemonColors?.fight,
       PokemonTypes.normal => pokemonColors?.normal,
     };

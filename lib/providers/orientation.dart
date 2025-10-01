@@ -5,7 +5,6 @@ part 'orientation.g.dart';
 
 @riverpod
 class OrientationNotifier extends _$OrientationNotifier {
-  
   @override
   Axis build() {
     return Axis.vertical;

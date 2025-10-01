@@ -7,20 +7,20 @@ import 'package:pokeapp/providers/orientation.dart';
 import 'package:pokeapp/screens/home/pokemon_list.dart';
 
 class HomePage extends ConsumerWidget {
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final pokemonListHasError = ref.watch(pokemonListHasErrorProvider);
+    final favouritePokemons = ref.watch(favouritePokemonsProvider.notifier);
 
-    final floatinButton = pokemonListHasError 
-      ? FloatingActionButton(
-          onPressed: () => ref.invalidate(favouritePokemonsProvider),
-          child: Icon(Icons.refresh),
-        ) 
-      : null;
-  
-    
+    final floatinButton = pokemonListHasError
+        ? FloatingActionButton(
+            onPressed: () {
+              favouritePokemons.refresh(ref);
+            },
+            child: Icon(Icons.refresh),
+          )
+        : null;
+
     return Scaffold(
       appBar: pokeAppBar("Pokeapp", context),
       drawer: AppDrawer(),

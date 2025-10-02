@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokeapp/providers/favourite_pokemons.dart';
-import 'package:pokeapp/providers/orientation.dart';
 import 'package:pokeapp/screens/home/pokemon_card.dart';
 
 List<int> pokemonIds = [4, 134, 151, 153, 576, 107, 108, 158, 201, 392];

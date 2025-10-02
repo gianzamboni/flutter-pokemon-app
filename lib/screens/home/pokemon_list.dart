@@ -10,23 +10,27 @@ class PokemonList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Watch the orientation provider
-    final orientation = ref.watch(orientationProvider);
+    final mainAxisDirection =
+        MediaQuery.of(context).orientation == Orientation.portrait
+        ? Axis.vertical
+        : Axis.horizontal;
+
     final pokemonList = ref.watch(favouritePokemonsProvider);
 
     return DecoratedBox(
       decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
       child: Center(
         child: SizedBox(
-          height: orientation == Axis.horizontal ? 350 : null,
+          height: mainAxisDirection == Axis.horizontal ? 350 : null,
           child: pokemonList.when(
             data: (data) => ListView(
-              scrollDirection: orientation,
+              scrollDirection: mainAxisDirection,
               children: [
                 ...data.asMap().entries.map((entry) {
                   return PokemonCard(
                     pokemon: entry.value,
                     index: entry.key,
-                    mainAxisFlow: orientation,
+                    mainAxisFlow: mainAxisDirection,
                   );
                 }),
               ],

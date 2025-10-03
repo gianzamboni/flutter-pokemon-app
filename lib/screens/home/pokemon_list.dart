@@ -14,31 +14,24 @@ class PokemonList extends ConsumerWidget {
         ? Axis.vertical
         : Axis.horizontal;
 
-    final pokemonList = ref.watch(favouritePokemonsProvider);
+    // Watch the provider to handle loading/error states and trigger initialization
+    final pokemonAsyncValue = ref.watch(favouritePokemonsProvider);
 
     return DecoratedBox(
       decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
       child: Center(
         child: SizedBox(
           height: mainAxisDirection == Axis.horizontal ? 350 : null,
-          child: pokemonList.when(
-            data: (data) => ListView(
+          child: ListView(
               scrollDirection: mainAxisDirection,
-              children: [
-                ...data.asMap().entries.map((entry) {
-                  return PokemonCard(
-                    pokemon: entry.value,
-                    index: entry.key,
-                    mainAxisFlow: mainAxisDirection,
-                  );
-                }),
-              ],
-            ),
-            error: (error, stackTrace) => Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text("Error loading pokemon list $error"),
-            ),
-            loading: () => CircularProgressIndicator(),
+              item
+              itemBuilder: (context, index) {
+                return PokemonCard(
+                  pokemon: pokemonAsyncValue[index],
+                  index: index,
+                  mainAxisFlow: mainAxisDirection,
+                );
+              },
           ),
         ),
       ),

@@ -13,7 +13,7 @@ part of 'favourite_pokemons.dart';
 const favouritePokemonsProvider = FavouritePokemonsNotifierProvider._();
 
 final class FavouritePokemonsNotifierProvider
-    extends $AsyncNotifierProvider<FavouritePokemonsNotifier, List<Pokemon>> {
+    extends $NotifierProvider<FavouritePokemonsNotifier, List<Pokemon>> {
   const FavouritePokemonsNotifierProvider._()
     : super(
         from: null,
@@ -31,69 +31,34 @@ final class FavouritePokemonsNotifierProvider
   @$internal
   @override
   FavouritePokemonsNotifier create() => FavouritePokemonsNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(List<Pokemon> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<List<Pokemon>>(value),
+    );
+  }
 }
 
 String _$favouritePokemonsNotifierHash() =>
-    r'7d95c1db2139265abb02708cd515c15f7e15317e';
+    r'5579c7e15e8f37d827286bb8decb0bc2e2b4a903';
 
-abstract class _$FavouritePokemonsNotifier
-    extends $AsyncNotifier<List<Pokemon>> {
-  FutureOr<List<Pokemon>> build();
+abstract class _$FavouritePokemonsNotifier extends $Notifier<List<Pokemon>> {
+  List<Pokemon> build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<AsyncValue<List<Pokemon>>, List<Pokemon>>;
+    final ref = this.ref as $Ref<List<Pokemon>, List<Pokemon>>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<List<Pokemon>>, List<Pokemon>>,
-              AsyncValue<List<Pokemon>>,
+              AnyNotifier<List<Pokemon>, List<Pokemon>>,
+              List<Pokemon>,
               Object?,
               Object?
             >;
     element.handleValue(ref, created);
   }
 }
-
-@ProviderFor(pokemonListHasError)
-const pokemonListHasErrorProvider = PokemonListHasErrorProvider._();
-
-final class PokemonListHasErrorProvider
-    extends $FunctionalProvider<bool, bool, bool>
-    with $Provider<bool> {
-  const PokemonListHasErrorProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'pokemonListHasErrorProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$pokemonListHasErrorHash();
-
-  @$internal
-  @override
-  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  bool create(Ref ref) {
-    return pokemonListHasError(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(bool value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<bool>(value),
-    );
-  }
-}
-
-String _$pokemonListHasErrorHash() =>
-    r'b034d35cea25271ce9d97493d97f7f85476c201e';

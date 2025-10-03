@@ -11,21 +11,12 @@ List<int> pokemonIds = [4, 134, 151, 153, 576, 107, 108, 158, 201, 392];
 @riverpod
 class FavouritePokemonsNotifier extends _$FavouritePokemonsNotifier {
   @override
-  Future<List<Pokemon>> build() async {
-    final response = await PokeApi.getPokemons(pokemonIds);
-    return response;
-  }
-
-  Future<void> refresh(WidgetRef ref) async {
-    state = state.hasError ? const AsyncLoading() : state;
-    final response = await PokeApi.getPokemons(pokemonIds);
-    state = AsyncData(response);
+  List<Pokemon> build() {
+    return [];
   }
 
   void move(int index, MoveDirection direction) {
-    if (state.isLoading || state.hasError) return;
-
-    List<Pokemon> newList = state.value!.toList();
+    List<Pokemon> newList = state.toList();
 
     if (direction == MoveDirection.up && index > 0) {
       var temp = newList[index - 1];
@@ -36,11 +27,6 @@ class FavouritePokemonsNotifier extends _$FavouritePokemonsNotifier {
       newList[index + 1] = newList[index];
       newList[index] = temp;
     }
-    state = AsyncData(newList);
+    state = newList;
   }
-}
-
-@riverpod
-bool pokemonListHasError(Ref ref) {
-  return ref.watch(favouritePokemonsProvider).hasError;
 }

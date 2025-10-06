@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokeapp/models/move_direction.dart';
 
 import '../../models/pokemon.dart';
 import '../../models/pokemon_states.dart';
@@ -9,12 +10,13 @@ class PokemonCard extends StatefulWidget {
     required this.pokemon,
     required this.index,
     required this.mainAxisFlow,
+    required this.moveCallback,
   });
 
   final Pokemon pokemon;
   final int index;
   final Axis mainAxisFlow;
-
+  final Function(MoveDirection) moveCallback;
   @override
   State<PokemonCard> createState() => _PokemonCardState();
 }
@@ -79,7 +81,7 @@ class _PokemonCardState extends State<PokemonCard> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        // widget.moveCallback(widget.index, MoveDirection.up);
+                        widget.moveCallback(MoveDirection.up);
                       },
                       child: Icon(
                         widget.mainAxisFlow == Axis.horizontal
@@ -93,7 +95,7 @@ class _PokemonCardState extends State<PokemonCard> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        // widget.moveCallback(widget.index, MoveDirection.down);
+                        widget.moveCallback(MoveDirection.down);
                       },
                       child: Icon(
                         widget.mainAxisFlow == Axis.horizontal

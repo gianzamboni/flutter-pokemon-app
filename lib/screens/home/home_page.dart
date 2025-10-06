@@ -9,7 +9,7 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pokemonListHasError = ref.watch(pokemonListHasErrorProvider);
-    final favouritePokemons = ref.watch(favouritePokemonsProvider.notifier);
+    final favouritePokemons = ref.read(favouritePokemonsProvider.notifier);
 
     final floatinButton = pokemonListHasError
         ? FloatingActionButton(

@@ -22,17 +22,22 @@ class PokemonList extends ConsumerWidget {
         child: SizedBox(
           height: mainAxisDirection == Axis.horizontal ? 350 : null,
           child: pokemonList.when(
-            data: (data) => ListView(
+            data: (data) => ListView.builder(
               scrollDirection: mainAxisDirection,
-              children: [
-                ...data.asMap().entries.map((entry) {
-                  return PokemonCard(
-                    pokemon: entry.value,
-                    index: entry.key,
-                    mainAxisFlow: mainAxisDirection,
-                  );
-                }),
-              ],
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                return PokemonCard(
+                  key: Key("pokemon-${data[index].id.toString()}"),
+                  index: index,
+                  mainAxisFlow: mainAxisDirection,
+                  pokemon: data[index],
+                  moveCallback: (direction) {
+                    ref
+                        .read(favouritePokemonsProvider.notifier)
+                        .move(index, direction);
+                  },
+                );
+              },
             ),
             error: (error, stackTrace) => Padding(
               padding: const EdgeInsets.all(16.0),

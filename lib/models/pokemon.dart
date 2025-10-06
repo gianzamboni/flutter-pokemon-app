@@ -32,6 +32,8 @@ class Pokemon {
     return "${_name[0].toUpperCase()}${_name.substring(1).toLowerCase()}";
   }
 
+  int get id => _id;
+
   bool hasState(PokemonState state) {
     return _images.containsKey(state) && _images[state] != null;
   }

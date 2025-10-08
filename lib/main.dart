@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokeapp/screens/home/home_page.dart';
-import 'package:pokeapp/screens/new_pokemon/new_pokemon_form.dart';
+import 'package:pokeapp/screens/new_pokemon/new_pokemon.dart';
 import 'package:pokeapp/themes/light_theme.dart';
 import 'package:pokeapp/themes/dark_theme.dart';
 
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       title: 'Poke App',
       routes: {
         '/': (context) => HomePage(),
-        '/new-pokemon': (context) => NewPokemonForm(),
+        '/new-pokemon': (context) => NewPokemon(),
       },
       themeMode: ThemeMode.system,
       darkTheme: darkTheme,

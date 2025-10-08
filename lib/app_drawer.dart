@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pokeapp/providers/user_session.dart';
 
 @immutable
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends ConsumerWidget {
   const AppDrawer({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    
+    final userIsAuthenticated = ref.watch(userIsAuthenticatedProvider);
 
+    final publicLinks = [
+      DrawLink(
+        label: "Inicio",
+        icon: Icons.home,
+        routeName: '/',
+      ),
+    ];
+
+    final privateLinks = [
+      DrawLink(
+        label: "Nuevo Pokémon",
+        icon: Icons.add,
+        routeName: '/new-pokemon',
+      ),
+    ];
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(color: Theme.of(context).colorScheme.primaryContainer),
@@ -20,16 +39,8 @@ class AppDrawer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Menú", style: Theme.of(context).textTheme.headlineMedium),
-              DrawLink(
-                label: "Inicio",
-                icon: Icons.home,
-                routeName: '/',
-              ),
-              DrawLink(
-                label: "Nuevo Pokémon",
-                icon: Icons.add,
-                routeName: '/new-pokemon',
-              ),
+              ...publicLinks,
+              ...(userIsAuthenticated ? privateLinks : []),
             ],
           ),
         ),

@@ -9,7 +9,7 @@ class PokeApi {
       dotenv.env['POKEAPI_BASE_URL'] ?? "http://10.0.2.2:8080";
 
   static Future<List<Pokemon>> getPokemons(List<int> ids) async {
-    final url = Uri.parse("$_baseUrl/pokemon?ids=${ids.join(",")}");
+    final url = Uri.parse("$_baseUrl/api/pokemon?ids=${ids.join(",")}");
     print(url);
     final response = await http.get(url);
     print(response.body);

@@ -2,30 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:pokeapp/models/pokemon_states.dart';
 import 'package:pokeapp/models/pokemon_types.dart';
 
-
 @immutable
 class Pokemon {
-
   final int _id;
   final String _name;
-  final PokemonTypes _type; 
+  final PokemonTypes _type;
   final Map<PokemonState, String?> _images;
 
-
-  Pokemon(this._id, this._name, this._type, { required String imageUrl, String? shinyUrl }) :
-      _images = {
-        PokemonState.normal: imageUrl,
-        PokemonState.shiny: shinyUrl,
-      };
+  Pokemon(
+    this._id,
+    this._name,
+    this._type, {
+    required String imageUrl,
+    String? shinyUrl,
+  }) : _images = {PokemonState.normal: imageUrl, PokemonState.shiny: shinyUrl};
 
   factory Pokemon.fromJson(Map<String, dynamic> json) {
     final type = PokemonTypes.values.byName(json['type']['name'].toLowerCase());
-    return Pokemon(json['id'], json['name'], type, imageUrl: json['picture'], shinyUrl: json['shinyPicture']);
+    return Pokemon(
+      json['id'],
+      json['name'],
+      type,
+      imageUrl: json['picture'],
+      shinyUrl: json['shinyPicture'],
+    );
   }
 
   String get capitalizedName {
     return "${_name[0].toUpperCase()}${_name.substring(1).toLowerCase()}";
   }
+
+  int get id => _id;
 
   bool hasState(PokemonState state) {
     return _images.containsKey(state) && _images[state] != null;

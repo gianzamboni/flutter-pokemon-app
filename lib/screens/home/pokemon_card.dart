@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokeapp/models/move_direction.dart';
 
 import '../../models/pokemon.dart';
 import '../../models/pokemon_states.dart';
@@ -9,24 +10,26 @@ class PokemonCard extends StatefulWidget {
     required this.pokemon,
     required this.index,
     required this.mainAxisFlow,
+    required this.moveCallback,
   });
 
   final Pokemon pokemon;
   final int index;
   final Axis mainAxisFlow;
-
+  final Function(MoveDirection) moveCallback;
   @override
   State<PokemonCard> createState() => _PokemonCardState();
 }
 
 class _PokemonCardState extends State<PokemonCard> {
-  
   PokemonState currentState = PokemonState.normal;
-  
+
   void showSnackBar(BuildContext context, PokemonState state) {
-    final article = state.name.startsWith(RegExp("(a|e|i|o|u)"))? "an" : "a";
+    final article = state.name.startsWith(RegExp("(a|e|i|o|u)")) ? "an" : "a";
     final snackBar = SnackBar(
-      content: Text('${widget.pokemon.capitalizedName} does not have $article ${state.name} version!'),
+      content: Text(
+        '${widget.pokemon.capitalizedName} does not have $article ${state.name} version!',
+      ),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -49,7 +52,7 @@ class _PokemonCardState extends State<PokemonCard> {
 
     return GestureDetector(
       onTap: () {
-       updateCurrentPokemonState(PokemonState.shiny);
+        updateCurrentPokemonState(PokemonState.shiny);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -67,7 +70,9 @@ class _PokemonCardState extends State<PokemonCard> {
               vertical: 30.0,
             ),
             child: Flex(
-              direction: widget.mainAxisFlow == Axis.horizontal ? Axis.vertical : Axis.horizontal,
+              direction: widget.mainAxisFlow == Axis.horizontal
+                  ? Axis.vertical
+                  : Axis.horizontal,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Flex(
@@ -76,9 +81,13 @@ class _PokemonCardState extends State<PokemonCard> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                       // widget.moveCallback(widget.index, MoveDirection.up);
+                        widget.moveCallback(MoveDirection.up);
                       },
-                      child: Icon(widget.mainAxisFlow == Axis.horizontal ? Icons.arrow_back : Icons.arrow_upward),
+                      child: Icon(
+                        widget.mainAxisFlow == Axis.horizontal
+                            ? Icons.arrow_back
+                            : Icons.arrow_upward,
+                      ),
                     ),
                     Text(
                       widget.pokemon.capitalizedName,
@@ -86,18 +95,26 @@ class _PokemonCardState extends State<PokemonCard> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                       // widget.moveCallback(widget.index, MoveDirection.down);
+                        widget.moveCallback(MoveDirection.down);
                       },
-                      child: Icon(widget.mainAxisFlow == Axis.horizontal ? Icons.arrow_forward : Icons.arrow_downward),
+                      child: Icon(
+                        widget.mainAxisFlow == Axis.horizontal
+                            ? Icons.arrow_forward
+                            : Icons.arrow_downward,
+                      ),
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: 162,  
+                  height: 162,
                   width: 162,
-                  child: Image.asset(
+                  child: Image.network(
                     pokemonImagePath,
                     fit: BoxFit.contain,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return const Center(child: CircularProgressIndicator());
+                    },
                     errorBuilder: (context, object, s) {
                       return Placeholder(); // Cambiar error image
                     },

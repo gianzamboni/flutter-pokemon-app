@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pokeapp/app_bar_title.dart';
 import 'package:pokeapp/app_drawer.dart';
 
-class NewPokemon extends StatelessWidget {
-  const NewPokemon({super.key});
+class NewPokemonPage extends StatelessWidget {
+  const NewPokemonPage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokeapp/screens/home/home_page.dart';
-import 'package:pokeapp/screens/new_pokemon/new_pokemon.dart';
+import 'package:pokeapp/screens/login/login_page.dart';
+import 'package:pokeapp/screens/new_pokemon/new_pokemon_page.dart';
+import 'package:pokeapp/screens/sign_up/sign_up_page.dart';
+import 'package:pokeapp/secured_screen.dart';
 import 'package:pokeapp/themes/light_theme.dart';
 import 'package:pokeapp/themes/dark_theme.dart';
 
@@ -25,8 +28,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Poke App',
       routes: {
-        '/': (context) => HomePage(),
-        '/new-pokemon': (context) => NewPokemon(),
+        '/': (context) => SecuredScreen(child: HomePage()),
+        '/new-pokemon': (context) => SecuredScreen(child: NewPokemonPage()),
+        '/login': (context) => LoginPage(),
+        '/signup': (context) => SignUpPage(),
       },
       themeMode: ThemeMode.system,
       darkTheme: darkTheme,

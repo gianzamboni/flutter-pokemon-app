@@ -19,9 +19,7 @@ class PokemonList extends ConsumerWidget {
     return DecoratedBox(
       decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
       child: Center(
-        child: SizedBox(
-          height: mainAxisDirection == Axis.horizontal ? 350 : null,
-          child: pokemonList.when(
+        child: pokemonList.when(
             data: (data) => ListView.builder(
               scrollDirection: mainAxisDirection,
               itemCount: data.length,
@@ -33,8 +31,8 @@ class PokemonList extends ConsumerWidget {
                   pokemon: data[index],
                   moveCallback: (direction) {
                     ref
-                        .read(favouritePokemonsProvider.notifier)
-                        .move(index, direction);
+                      .read(favouritePokemonsProvider.notifier)
+                      .move(index, direction);
                   },
                 );
               },
@@ -46,7 +44,6 @@ class PokemonList extends ConsumerWidget {
             loading: () => CircularProgressIndicator(),
           ),
         ),
-      ),
     );
   }
 }

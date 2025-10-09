@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokeapp/models/move_direction.dart';
 import 'package:pokeapp/models/pokemon.dart';
-import 'package:pokeapp/services/poke_api.dart';
+import 'package:pokeapp/services/pokemon_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'favourite_pokemons.g.dart';
@@ -12,14 +12,14 @@ List<int> pokemonIds = [4, 134, 151, 153, 576, 107, 108, 158, 201, 392];
 class FavouritePokemonsNotifier extends _$FavouritePokemonsNotifier {
   @override
   Future<List<Pokemon>> build() async {
-    final response = await PokeApi.getPokemons(pokemonIds);
+    final response = await PokemonService.getPokemons(pokemonIds);
     return response;
   }
 
   Future<void> refresh(WidgetRef ref) async {
     state = state.hasError ? const AsyncLoading() : state;
-    final response = await PokeApi.getPokemons(pokemonIds);
-    state = AsyncData(response);
+    final response = await PokemonService.getPokemons(pokemonIds);
+    state = AsyncData(response);  
   }
 
   void move(int index, MoveDirection direction) {

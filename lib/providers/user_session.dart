@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokeapp/models/user_session.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -9,6 +8,12 @@ class UserSessionNotifier extends _$UserSessionNotifier {
   @override
   UserSession? build() {
     return null;
+  }
+
+
+  void setUserSession(UserSession userSession) {
+    print('setUserSession: ${userSession.toString()}');
+    state = userSession;
   }
 }
 

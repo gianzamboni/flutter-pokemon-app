@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pokeapp/providers/user_session.dart';
 import 'package:pokeapp/utils/DrawLink.dart';
+import 'package:pokeapp/utils/strings.dart';
 
 @immutable
 class AppDrawer extends ConsumerWidget {
@@ -11,6 +13,9 @@ class AppDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
+    final userSession = ref.read(userSessionProvider.notifier);
+    final userSessionValue = ref.read(userSessionProvider).requireValue;
+  
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(color: Theme.of(context).colorScheme.primaryContainer),
@@ -22,7 +27,10 @@ class AppDrawer extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  Text(capitalizeFirstLetter(userSessionValue?.fullName ?? ""), style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer)),
                   DrawLink(
                     label: "Home",
                     icon: Icons.home,
@@ -34,6 +42,12 @@ class AppDrawer extends ConsumerWidget {
                     routeName: '/new-pokemon',
                   ),
                 ],
+              ),
+              TextButton(
+                onPressed: () {
+                  userSession.logout();
+                },
+                child: Text("Logout"),
               ),
             ],
           ),

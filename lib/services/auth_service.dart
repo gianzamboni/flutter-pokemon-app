@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:pokeapp/models/user_session.dart';
 import 'package:pokeapp/services/base_pokemon_service.dart';
 
@@ -28,8 +26,7 @@ class AuthService {
     });
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      final decoded = jsonDecode(response.body);
-      final userSession = await UserSession.fromJson(decoded);
+      final userSession = await UserSession.fromJson(response.body);
       return userSession;
     } else {
       throw Exception("Failed to login: ${response.statusCode} ${response.body}");

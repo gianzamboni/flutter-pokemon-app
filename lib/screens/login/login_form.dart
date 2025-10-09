@@ -42,7 +42,8 @@ class _LoginFormState extends ConsumerState<LoginForm> {
           content: Text('Login successful'),
         ),
       );
-    } catch (error) {
+    } catch (error, stackTrace) {
+
       if (!mounted) return;
       setState(() {
         _errorMessage = error.toString();

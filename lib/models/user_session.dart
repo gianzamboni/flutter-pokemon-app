@@ -1,12 +1,28 @@
+import 'dart:convert';
+
 import 'package:pokeapp/models/user.dart';
 
 class UserSession {
-  final String token;
-  final User user;
+  final String _token;
+  final User _user;
   
-  UserSession({required this.token, required this.user});
+  factory UserSession.fromJson(String jsonString) {
+    final decode = json.decode(jsonString);
+    print(decode);
 
-  static Future<UserSession> fromJson(decode) async {
-    return UserSession(token: decode['token'], user: await User.fromJson(decode));
+    final user = User.fromJsonMap(decode['user']);
+    
+    return UserSession(token: decode['token'], user: user);
   }
+
+  UserSession({required String token, required User user}) : _token = token, _user = user;
+
+  String toJson() {
+    return json.encode({
+      'token': _token,
+      'user': _user.toDto(),
+    });
+  }
+
+  String get fullName => _user.fullName;
 }

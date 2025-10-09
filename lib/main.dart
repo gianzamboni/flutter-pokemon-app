@@ -11,6 +11,7 @@ import 'package:pokeapp/themes/dark_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await dotenv.load(fileName: ".env");
 
   FlutterError.onError = (details) {

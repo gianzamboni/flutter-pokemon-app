@@ -13,7 +13,7 @@ part of 'user_session.dart';
 const userSessionProvider = UserSessionNotifierProvider._();
 
 final class UserSessionNotifierProvider
-    extends $NotifierProvider<UserSessionNotifier, UserSession?> {
+    extends $AsyncNotifierProvider<UserSessionNotifier, UserSession?> {
   const UserSessionNotifierProvider._()
     : super(
         from: null,
@@ -31,31 +31,23 @@ final class UserSessionNotifierProvider
   @$internal
   @override
   UserSessionNotifier create() => UserSessionNotifier();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(UserSession? value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<UserSession?>(value),
-    );
-  }
 }
 
 String _$userSessionNotifierHash() =>
-    r'540066c1d471d40e3e08b37f5051c3ce8bc278bf';
+    r'92343d089c76234b950850b593b4a72052639155';
 
-abstract class _$UserSessionNotifier extends $Notifier<UserSession?> {
-  UserSession? build();
+abstract class _$UserSessionNotifier extends $AsyncNotifier<UserSession?> {
+  FutureOr<UserSession?> build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<UserSession?, UserSession?>;
+    final ref = this.ref as $Ref<AsyncValue<UserSession?>, UserSession?>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<UserSession?, UserSession?>,
-              UserSession?,
+              AnyNotifier<AsyncValue<UserSession?>, UserSession?>,
+              AsyncValue<UserSession?>,
               Object?,
               Object?
             >;
@@ -103,4 +95,4 @@ final class UserIsAuthenticatedProvider
 }
 
 String _$userIsAuthenticatedHash() =>
-    r'ac0a61e2851b3719365cf14e858913306e6ed692';
+    r'7f69cd904d0f4f4ccb5e222e5aaad3a3e185401a';

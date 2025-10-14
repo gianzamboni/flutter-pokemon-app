@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokeapp/themes/pokemon_theme_extension.dart';
 import 'package:pokeapp/themes/common_theme.dart';
+import 'package:pokeapp/models/pokemon_types.dart';
 
 final lightTheme = ThemeData(
   useMaterial3: true,
@@ -11,13 +12,13 @@ final lightTheme = ThemeData(
   ),
   textTheme: textTheme,
   extensions: <ThemeExtension<dynamic>>[
-    const PokemonColors(
-      fight: Color(0xffff6a6a),
-      fire: Color(0xffff7f00),
-      normal: Color(0xffddccaa),
-      grass: Color(0xff99ff66),
-      psychic: Color(0xffffb5c5),
-      water: Color(0xffb0e2ff),
-    ),
+    const PokemonColors(colors: {
+      PokemonTypes.fight: Color(0xffff6a6a),
+      PokemonTypes.fire: Color(0xffff7f00),
+      PokemonTypes.normal: Color(0xffddccaa),
+      PokemonTypes.grass: Color(0xff99ff66),
+      PokemonTypes.psychic: Color(0xffffb5c5),
+      PokemonTypes.water: Color(0xffb0e2ff),
+    }),
   ],
 );

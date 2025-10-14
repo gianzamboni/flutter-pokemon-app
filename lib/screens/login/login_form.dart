@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokeapp/providers/user_session.dart';
 import 'package:pokeapp/services/auth_service.dart';
-import 'package:pokeapp/utils/DrawLink.dart';
+import 'package:pokeapp/utils/DrawerLink.dart';
 
 class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
   bool _isLoading = false;
   String? _errorMessage;
 
-  Future<void> _onLoginPressed(WidgetRef ref) async {
+  Future<void> _onLoginPressed() async {
     setState(() {
       _isLoading = true;
       _errorMessage = null;
@@ -34,16 +34,14 @@ class _LoginFormState extends ConsumerState<LoginForm> {
       userSessioneProvider.setUserSession(userSession);
       
       if (!mounted) return;
+      Navigator.of(context).pushReplacementNamed('/');
 
-      // Success - redirect to home page
-      Navigator.pushReplacementNamed(context, '/');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Login successful'),
         ),
       );
-    } catch (error, stackTrace) {
-
+    } catch (error) {
       if (!mounted) return;
       setState(() {
         _errorMessage = error.toString();
@@ -113,7 +111,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: _isLoading ? null : () => _onLoginPressed(ref),
+                onPressed: _isLoading ? null : () => _onLoginPressed(),
                 child: _isLoading
                     ? const SizedBox(
                         height: 20,
@@ -128,7 +126,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
             ),
             SizedBox(
               width: double.infinity,
-              child: DrawLink(
+              child: DrawerLink(
                 label: "Sign up",  
                 routeName: "/signup",
                 color: Theme.of(context).colorScheme.primary,

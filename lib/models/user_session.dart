@@ -8,7 +8,6 @@ class UserSession {
   
   factory UserSession.fromJson(String jsonString) {
     final decode = json.decode(jsonString);
-    print(decode);
 
     final user = User.fromJsonMap(decode['user']);
     
@@ -25,4 +24,12 @@ class UserSession {
   }
 
   String get fullName => _user.fullName;
+}
+
+
+enum UserSessionState {
+  authenticated,
+  anonymous,
+  error,
+  loading;
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokeapp/providers/user_session.dart';
-import 'package:pokeapp/utils/DrawLink.dart';
+import 'package:pokeapp/utils/DrawerLink.dart';
 import 'package:pokeapp/utils/strings.dart';
 
 @immutable
@@ -31,23 +31,24 @@ class AppDrawer extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(capitalizeFirstLetter(userSessionValue?.fullName ?? ""), style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer)),
-                  DrawLink(
+                  DrawerLink(
                     label: "Home",
                     icon: Icons.home,
                     routeName: '/',
                   ),
-                  DrawLink(
+                  DrawerLink(
                     label: "Nuevo Pokémon",
                     icon: Icons.add,
                     routeName: '/new-pokemon',
                   ),
                 ],
               ),
-              TextButton(
+              DrawerLink(
                 onPressed: () {
                   userSession.logout();
                 },
-                child: Text("Logout"),
+                label: "Logout",
+                icon: Icons.logout,
               ),
             ],
           ),

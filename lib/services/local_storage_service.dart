@@ -6,7 +6,6 @@ class LocalStorageService {
   static final FlutterSecureStorage _storage = FlutterSecureStorage();
 
   static Future<void> saveUserSession(UserSession userSession) async {
-    print(userSession.toJson());
     await _storage.write(key: 'userSession', value: userSession.toJson());
   }
 

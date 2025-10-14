@@ -1,22 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pokeapp/models/user_session.dart';
 import 'package:pokeapp/providers/user_session.dart';
-import 'package:pokeapp/screens/login/login_page.dart';
 
-class SecuredScreen extends ConsumerWidget {
-  const SecuredScreen({super.key, required this.child,});
-
+class SecuredScreen extends ConsumerStatefulWidget {
+  const SecuredScreen({super.key, required this.child});
   final Widget child;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SecuredScreen> createState() => _SecuredScreenState();
+}
 
-    final userIsAuthenticated = ref.watch(userIsAuthenticatedProvider);
+class _SecuredScreenState extends ConsumerState<SecuredScreen> {
 
-    if (!userIsAuthenticated) {
-      return LoginPage();
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _redirectIfNotAuthenticated();
+    });
+    
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    ref.listen(userAuthStateProvider, (previous, next) {
+      _redirectIfNotAuthenticated();
+    });
+
+    final isAuth = ref.watch(userAuthStateProvider);
+    return isAuth == UserSessionState.authenticated ? widget.child : const SizedBox.shrink();
+  }
+
+  _redirectIfNotAuthenticated() {
+    final isAuth = ref.read(userAuthStateProvider);
+    if(isAuth == UserSessionState.anonymous || isAuth == UserSessionState.error) {
+      Navigator.of(context).pushReplacementNamed('/login');
     }
-
-    return child;
   }
 }

@@ -26,7 +26,11 @@ class UserSessionNotifier extends _$UserSessionNotifier {
 }
 
 @riverpod
-bool userIsAuthenticated(Ref ref) {
-  final userSession = ref.watch(userSessionProvider).value;
-  return userSession != null;
+UserSessionState userAuthState(Ref ref) {
+  final userSession = ref.watch(userSessionProvider);
+  return switch (userSession) {
+    AsyncData(:final value) => value != null ? UserSessionState.authenticated : UserSessionState.anonymous,
+    AsyncError() => UserSessionState.error,
+    AsyncLoading() => UserSessionState.loading,
+  };
 }

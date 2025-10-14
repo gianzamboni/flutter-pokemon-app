@@ -6,8 +6,10 @@ import 'package:http/http.dart' as http;
 class BasePokemonService {
   static final String _baseUrl = dotenv.env['POKEAPI_BASE_URL'] ?? '';
 
-  static Future<http.Response> get(String path) async {
-    final response = await http.get(Uri.parse("$_baseUrl/$path"));
+  static Future<http.Response> get(String path, {String? bearerToken}) async {
+    final Map<String, String> headers = bearerToken != null ? {'Authorization': 'Bearer $bearerToken'} : {};
+
+    final response = await http.get(Uri.parse("$_baseUrl/$path"), headers: headers);
     return response;
   }
 

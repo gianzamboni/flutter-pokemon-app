@@ -37,6 +37,7 @@ class _SecuredScreenState extends ConsumerState<SecuredScreen> {
   _redirectIfNotAuthenticated() {
     final isAuth = ref.read(userAuthStateProvider);
     if(isAuth == UserSessionState.anonymous || isAuth == UserSessionState.error) {
+      Navigator.of(context).popUntil((route) => route.isFirst);
       Navigator.of(context).pushReplacementNamed('/login');
     }
   }

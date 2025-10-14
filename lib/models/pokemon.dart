@@ -28,8 +28,6 @@ class Pokemon {
     );
   }
 
-
-
   int get id => _id;
 
   String get name => _name;

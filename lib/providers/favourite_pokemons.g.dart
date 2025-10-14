@@ -34,7 +34,7 @@ final class FavouritePokemonsNotifierProvider
 }
 
 String _$favouritePokemonsNotifierHash() =>
-    r'ea2e458c7643c642511cbcda29b4cfea06f5ebf9';
+    r'6ca4449ab5d581f054ace644936efced538872bb';
 
 abstract class _$FavouritePokemonsNotifier
     extends $AsyncNotifier<List<Pokemon>> {

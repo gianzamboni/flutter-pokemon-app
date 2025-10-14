@@ -20,7 +20,7 @@ class PokemonList extends ConsumerWidget {
       decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
       child: Center(
         child: pokemonList.when(
-            data: (data) => ListView.builder(
+            data: (data) => data.isEmpty ? Center(child: Text("No hay pokemons favoritos")) : ListView.builder(
               scrollDirection: mainAxisDirection,
               itemCount: data.length,
               itemBuilder: (context, index) {

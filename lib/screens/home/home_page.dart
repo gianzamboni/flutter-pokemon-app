@@ -18,8 +18,12 @@ class HomePage extends ConsumerWidget {
             },
             child: Icon(Icons.refresh),
           )
-        : null;
-
+        : FloatingActionButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('/new-pokemon');
+            },
+            child: Icon(Icons.add),
+          );
     return Scaffold(
       appBar: pokeAppBar("Pokeapp", context),
       drawer: AppDrawer(),

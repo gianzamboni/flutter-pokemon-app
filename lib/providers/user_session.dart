@@ -1,5 +1,5 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokeapp/models/user_session.dart';
+import 'package:pokeapp/services/local_storage_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_session.g.dart';
@@ -7,13 +7,30 @@ part 'user_session.g.dart';
 @riverpod
 class UserSessionNotifier extends _$UserSessionNotifier {
   @override
-  UserSession? build() {
-    return null;
+  Future<UserSession?> build() async {
+    final userSession = await LocalStorageService.getUserSession();
+    return userSession;
+  }
+
+  void setUserSession(UserSession? userSession) async {
+    if(userSession != null) {
+      LocalStorageService.saveUserSession(userSession);
+    }
+    state = AsyncData(userSession);
+    }
+
+  void logout() {
+    LocalStorageService.clear();
+    state = AsyncData(null);
   }
 }
 
 @riverpod
-bool userIsAuthenticated(Ref ref) {
+UserSessionState userAuthState(Ref ref) {
   final userSession = ref.watch(userSessionProvider);
-  return userSession != null;
+  return switch (userSession) {
+    AsyncData(:final value) => value != null ? UserSessionState.authenticated : UserSessionState.anonymous,
+    AsyncError() => UserSessionState.error,
+    AsyncLoading() => UserSessionState.loading,
+  };
 }

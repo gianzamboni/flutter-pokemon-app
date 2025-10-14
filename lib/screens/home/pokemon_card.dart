@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokeapp/models/move_direction.dart';
+import 'package:pokeapp/utils/strings.dart';
 
 import '../../models/pokemon.dart';
 import '../../models/pokemon_states.dart';
@@ -28,7 +29,7 @@ class _PokemonCardState extends State<PokemonCard> {
     final article = state.name.startsWith(RegExp("(a|e|i|o|u)")) ? "an" : "a";
     final snackBar = SnackBar(
       content: Text(
-        '${widget.pokemon.capitalizedName} does not have $article ${state.name} version!',
+        '${widget.pokemon.name} does not have $article ${state.name} version!',
       ),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -90,7 +91,7 @@ class _PokemonCardState extends State<PokemonCard> {
                       ),
                     ),
                     Text(
-                      widget.pokemon.capitalizedName,
+                      capitalizeFirstLetter(widget.pokemon.name),
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     ElevatedButton(

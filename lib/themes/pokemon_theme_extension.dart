@@ -1,40 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:pokeapp/models/pokemon_types.dart';
 
 @immutable
 class PokemonColors extends ThemeExtension<PokemonColors> {
-  final Color fire;
-  final Color water;
-  final Color grass;
-  final Color psychic;
-  final Color fight;
-  final Color normal;
+  // Immutable map of colors keyed by PokemonTypes
+  final Map<PokemonTypes, Color?> _colors;
 
   const PokemonColors({
-    required this.fire,
-    required this.water,
-    required this.grass,
-    required this.psychic,
-    required this.fight,
-    required this.normal,
-  });
+    required Map<PokemonTypes, Color?> colors,
+  }) : _colors = colors;
+
+  // Convenience getter
+  Color? operator [](PokemonTypes type) => _colors[type];
+  Map<PokemonTypes, Color?> get asMap => Map.unmodifiable(_colors);
 
   @override
-  PokemonColors copyWith({
-    Color? fire,
-    Color? water,
-    Color? grass,
-    Color? psychic,
-    Color? fight,
-    Color? normal,
-  }) {
-    return PokemonColors(
-      fire: fire ?? this.fire,
-      water: water ?? this.water,
-      grass: grass ?? this.grass,
-      psychic: psychic ?? this.psychic,
-      fight: fight ?? this.fight,
-      normal: normal ?? this.normal,
-    );
+  PokemonColors copyWith({Map<PokemonTypes, Color?>? overrides}) {
+    if (overrides == null || overrides.isEmpty) return this;
+    final merged = Map<PokemonTypes, Color?>.from(_colors)..addAll(overrides);
+    return PokemonColors(colors: merged);
   }
 
   @override
@@ -42,17 +26,32 @@ class PokemonColors extends ThemeExtension<PokemonColors> {
     if (other is! PokemonColors) {
       return this;
     }
-    return PokemonColors(
-      fire: Color.lerp(fire, other.fire, t) ?? fire,
-      water: Color.lerp(water, other.water, t) ?? water,
-      grass: Color.lerp(grass, other.grass, t) ?? grass,
-      psychic: Color.lerp(psychic, other.psychic, t) ?? psychic,
-      fight: Color.lerp(fight, other.fight, t) ?? fight,
-      normal: Color.lerp(normal, other.normal, t) ?? normal,
-    );
+    
+    final Map<PokemonTypes, Color?> lerped = {};
+    for (final type in PokemonTypes.values) {
+      final thisColor = _colors[type];
+      final otherColor = other._colors[type];
+      final lerpedColor = Color.lerp(thisColor, otherColor, t);
+
+      if(thisColor == null) {
+        lerped[type] = otherColor;
+      } else if (otherColor == null) {
+        lerped[type] = thisColor;
+      } else {
+        lerped[type] = lerpedColor;
+      }   
+    }
+    return PokemonColors(colors: lerped);
   }
 
   @override
   String toString() =>
-      'PokemonColors(fire: $fire, water: $water, plant: $grass, psychic: $psychic, fight: $fight, normal: $normal)';
+      'PokemonColors(colors: $_colors)';
+}
+
+extension PokemonTypesTheme on PokemonTypes {
+  Color? themeColor(BuildContext context) {
+    final pokemonColors = Theme.of(context).extension<PokemonColors>();
+    return pokemonColors?[this];
+  }
 }

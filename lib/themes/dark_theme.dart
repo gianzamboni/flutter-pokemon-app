@@ -19,6 +19,7 @@ final darkTheme = ThemeData(
       PokemonTypes.grass: Color(0xff236e00),
       PokemonTypes.psychic: Color(0xff834454),
       PokemonTypes.water: Color(0xff32617a),
+      PokemonTypes.bug: Color(0xff728000),
     }),
   ],
 );

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:pokeapp/utils/ApiServiceError.dart';
 
 class BasePokemonService {
   static final String _baseUrl = dotenv.env['POKEAPI_BASE_URL'] ?? '';
@@ -38,7 +39,7 @@ class BasePokemonService {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return response;
     } else {
-      throw Exception("Failed to post $path: ${response.statusCode} ${response.body}");
+      throw ApiServiceError(statusCode: response.statusCode, body: response.body);
     }
   }
 }

@@ -90,9 +90,15 @@ class _PokemonCardState extends State<PokemonCard> {
                             : Icons.arrow_upward,
                       ),
                     ),
-                    Text(
-                      capitalizeFirstLetter(widget.pokemon.name),
-                      style: Theme.of(context).textTheme.headlineSmall,
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width * 0.4,
+                      ),
+                      child: Text(
+                        kebabCaseToPrintable(widget.pokemon.name),
+                        style: Theme.of(context).textTheme.headlineSmall,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     ElevatedButton(
                       onPressed: () {

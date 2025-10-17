@@ -2,7 +2,7 @@ import 'package:pokeapp/models/user_session.dart';
 import 'package:pokeapp/services/base_pokemon_service.dart';
 
 class AuthService {
-  static final String _basePath = "/api/auth";
+  static final String _basePath = "/auth";
 
   static Future<bool> signUp(String name, String surname, String username, String password) async {
     final response = await BasePokemonService.post("$_basePath/register", {

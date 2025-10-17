@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokeapp/models/move_direction.dart';
 import 'package:pokeapp/models/pokemon.dart';
 import 'package:pokeapp/providers/user_session.dart';
-import 'package:pokeapp/services/pokemon_service.dart';
+import 'package:pokeapp/services/favrourite_pokemon_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'favourite_pokemons.g.dart';
@@ -26,7 +26,18 @@ class FavouritePokemonsNotifier extends _$FavouritePokemonsNotifier {
     if (token == null) {
       return [];
     } else {
-      return await PokemonService.getFavouritePokemons(token);
+      return await FavouritePokemonService.getFavouritePokemons(token);
+    }
+  }
+
+  Future<void> add(BasicPokemon pokemon) async {
+    if (state.isLoading || state.hasError) return;
+    final token = ref.read(userSessionProvider.notifier).getSessionToken();
+    if (token == null) {
+      return;
+    } else {
+      final response = await FavouritePokemonService.addFavouritePokemon(token, pokemon.id);
+      state = AsyncData([...state.value!, response]);
     }
   }
 

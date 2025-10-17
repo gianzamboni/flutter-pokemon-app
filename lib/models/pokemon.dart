@@ -2,16 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:pokeapp/models/pokemon_states.dart';
 import 'package:pokeapp/models/pokemon_types.dart';
 
-@immutable
-class Pokemon {
+
+class BasicPokemon {
   final int _id;
   final String _name;
+
+  BasicPokemon(this._id, this._name);
+
+  factory BasicPokemon.fromJson(Map<String, dynamic> json) {
+    return BasicPokemon(json['id'], json['name']);
+  }
+
+  int get id => _id;
+  String get name => _name;
+  
+}
+
+
+class Pokemon extends BasicPokemon {
   final PokemonTypes _type;
   final Map<PokemonState, String?> _images;
 
   Pokemon(
-    this._id,
-    this._name,
+    super._id,
+    super._name,
     this._type, {
     required String imageUrl,
     String? shinyUrl,

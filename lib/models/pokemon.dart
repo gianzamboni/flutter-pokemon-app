@@ -20,31 +20,39 @@ class BasicPokemon {
 
 
 class Pokemon extends BasicPokemon {
+  final int _rankingNumber;
   final PokemonTypes _type;
   final Map<PokemonState, String?> _images;
 
   Pokemon(
     super._id,
     super._name,
+    this._rankingNumber,
     this._type, {
     required String imageUrl,
     String? shinyUrl,
   }) : _images = {PokemonState.normal: imageUrl, PokemonState.shiny: shinyUrl};
 
   factory Pokemon.fromJson(Map<String, dynamic> json) {
-    final type = PokemonTypes.values.byName(json['type']['name'].toLowerCase());
+    print(json);
+    final type = PokemonTypes.values.byName(json['pokemon']['type']['name'].toLowerCase());
+    final rankingNumber = json['rankingNumber'];
+    final pokemon = json['pokemon'];
     return Pokemon(
-      json['id'],
-      json['name'],
+      pokemon['id'],
+      pokemon['name'],
+      rankingNumber,
       type,
-      imageUrl: json['picture'],
-      shinyUrl: json['shinyPicture'],
+      imageUrl: pokemon['picture'],
+      shinyUrl: pokemon['shinyPicture'],
     );
   }
 
   int get id => _id;
 
   String get name => _name;
+
+  int get rankingNumber => _rankingNumber;
 
   bool hasState(PokemonState state) {
     return _images.containsKey(state) && _images[state] != null;

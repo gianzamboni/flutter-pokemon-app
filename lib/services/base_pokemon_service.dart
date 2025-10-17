@@ -18,13 +18,23 @@ class BasePokemonService {
     }
     
     return headers;
-  }   
+  }
+
+  static _parseResponse(http.Response response) {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return response;
+    } else {
+      throw ApiServiceError(statusCode: response.statusCode, body: response.body);
+    }
+  }
 
   static Future<http.Response> get(String path, {String? bearerToken}) async {
     final Map<String, String> headers = _getHeaders(bearerToken);
 
     final response = await http.get(Uri.parse("$_baseUrl$path"), headers: headers);
-    return response;
+    print("GET $path");
+    print(response.body);
+    return _parseResponse(response);
   }
 
   static Future<http.Response> post(String path, dynamic body, {String? bearerToken}) async {
@@ -36,10 +46,33 @@ class BasePokemonService {
       body: json.encode(body),
     );
 
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      return response;
-    } else {
-      throw ApiServiceError(statusCode: response.statusCode, body: response.body);
-    }
+    return _parseResponse(response);
+  }
+
+  static Future<http.Response> patch(String path, dynamic body, {String? bearerToken}) async {
+    final Map<String, String> headers = _getHeaders(bearerToken);
+
+    print("$_baseUrl$path");
+    print(headers);
+    print(body);
+
+    final response = await http.patch(
+      Uri.parse("$_baseUrl$path"),
+      headers: headers,
+      body: json.encode(body),
+    );
+
+    print("PATCH $_baseUrl$path");
+    print(response.body);
+
+    return _parseResponse(response);
+  }
+  
+  static Future<http.Response> delete(String path, {String? bearerToken}) async {
+    final Map<String, String> headers = _getHeaders(bearerToken);
+
+    final response = await http.delete(Uri.parse("$_baseUrl$path"), headers: headers);
+
+    return _parseResponse(response);
   }
 }

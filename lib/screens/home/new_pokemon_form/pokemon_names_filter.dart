@@ -37,6 +37,7 @@ class _PokemonNamesFilterState extends ConsumerState<PokemonNamesFilter> {
       child: Form(
         key: _formKey,
         child: Column(
+          spacing: 32,
           children: [
             TextField(
               controller: _searchController,
@@ -46,7 +47,7 @@ class _PokemonNamesFilterState extends ConsumerState<PokemonNamesFilter> {
               ),
             ),
             SizedBox(
-              height: 300,
+              height: 350,
               child: ListView.builder(
                 itemCount: filteredPokemons.length,
                 itemBuilder: (context, index) {

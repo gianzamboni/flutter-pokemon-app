@@ -33,29 +33,48 @@ class FavouritePokemonsNotifier extends _$FavouritePokemonsNotifier {
   Future<void> add(BasicPokemon pokemon) async {
     if (state.isLoading || state.hasError) return;
     final token = ref.read(userSessionProvider.notifier).getSessionToken();
-    if (token == null) {
-      return;
-    } else {
-      final response = await FavouritePokemonService.addFavouritePokemon(token, pokemon.id);
-      state = AsyncData([...state.value!, response]);
-    }
+    if (token == null) return;
+
+    final response = await FavouritePokemonService.addFavouritePokemon(token, pokemon.id);
+    state = AsyncData([...state.value!, response]);
   }
 
-  void move(int index, MoveDirection direction) {
+  Future<void> move(int index, MoveDirection direction) async {
     if (state.isLoading || state.hasError) return;
+
+
+    if(index < 0 && direction == MoveDirection.up) return;
+    if(index >= (state.value!.length) && direction == MoveDirection.down) return;
 
     List<Pokemon> newList = state.value!.toList();
 
-    if (direction == MoveDirection.up && index > 0) {
-      var temp = newList[index - 1];
-      newList[index - 1] = newList[index];
-      newList[index] = temp;
-    } else if (direction == MoveDirection.down && index < newList.length - 1) {
-      var temp = newList[index + 1];
-      newList[index + 1] = newList[index];
-      newList[index] = temp;
-    }
+    final index2 = direction == MoveDirection.up ? index - 1 : index + 1;
+
+    final token = ref.read(userSessionProvider.notifier).getSessionToken();
+    if (token == null) return;
     
+    final rankingNumber1 = newList[index].rankingNumber;
+    final rankingNumber2 = newList[index2].rankingNumber;
+
+    final modifiedPokemons = await FavouritePokemonService.swapFavouritePokemons(token, rankingNumber1, rankingNumber2);
+
+    print(modifiedPokemons);
+    newList[index] = modifiedPokemons[0];
+    newList[index2] = modifiedPokemons[1];
+
+    state = AsyncData(newList);
+  }
+
+  Future<void> delete(int index) async {
+    if (state.isLoading || state.hasError) return;
+
+    final token = ref.read(userSessionProvider.notifier).getSessionToken();
+    if (token == null) return;
+
+    await FavouritePokemonService.deleteFavouritePokemon(token, state.value![index].id);
+
+    final newList = state.value!.toList();
+    newList.removeAt(index);
     state = AsyncData(newList);
   }
 }

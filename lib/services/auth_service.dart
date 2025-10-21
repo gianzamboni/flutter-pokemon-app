@@ -4,20 +4,18 @@ import 'package:pokeapp/models/user_session.dart';
 import 'package:pokeapp/services/base_pokemon_service.dart';
 import 'package:pokeapp/utils/ApiServiceError.dart';
 import 'package:pokeapp/utils/AuthException.dart';
-import 'package:http/http.dart' as http;
 
 class AuthService {
   static final String _basePath = "/auth";
 
-  static Future<bool> signUp(String name, String surname, String username, String password) async {
+  static Future<void> signUp(String name, String surname, String username, String password) async {
     try {
-    final response = await BasePokemonService.post("$_basePath/register", {
+    await BasePokemonService.post("$_basePath/register", {
         'name': name,
         'surname': surname,
         'username': username,
         'password': password,
       });
-      return true;
     } catch (error) {
       print(error);
       throw error;

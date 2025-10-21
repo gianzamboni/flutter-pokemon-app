@@ -5,7 +5,7 @@ import 'package:pokeapp/app_drawer.dart';
 import 'package:pokeapp/providers/favourite_pokemons.dart';
 import 'package:pokeapp/screens/home/pokemon_list.dart';
 
-import 'new_pokemon_form.dart';
+import 'search_pokemon_form.dart';
 
 class HomePage extends ConsumerWidget {
   @override

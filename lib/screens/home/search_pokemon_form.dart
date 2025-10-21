@@ -4,8 +4,8 @@ import 'package:pokeapp/models/pokemon.dart';
 import 'package:pokeapp/screens/home/new_pokemon_form/pokemon_names_filter.dart';
 import 'package:pokeapp/services/pokemon_service.dart';
 
-class NewPokemonForm extends ConsumerWidget {
-  const NewPokemonForm({super.key});
+class PokemonSearchForm extends ConsumerWidget {
+  const PokemonSearchForm({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

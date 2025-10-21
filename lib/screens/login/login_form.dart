@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokeapp/providers/user_session.dart';
 import 'package:pokeapp/services/auth_service.dart';
+import 'package:pokeapp/utils/AuthException.dart';
 import 'package:pokeapp/utils/DrawerLink.dart';
 
 class LoginForm extends ConsumerStatefulWidget {
@@ -43,8 +44,10 @@ class _LoginFormState extends ConsumerState<LoginForm> {
       );
     } catch (error) {
       if (!mounted) return;
+      final message = error is AuthException ? error.message : "Unknown error";
+      
       setState(() {
-        _errorMessage = error.toString();
+        _errorMessage = message;
         _isLoading = false;
       });
     }

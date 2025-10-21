@@ -22,7 +22,7 @@ class HomePage extends ConsumerWidget {
           )
         : FloatingActionButton(
             onPressed: () {
-              showModalBottomSheet(context: context, builder: (context) => NewPokemonForm());
+              showModalBottomSheet(context: context, builder: (context) => PokemonSearchForm());
             },
             child: Icon(Icons.add),
           );

@@ -2,6 +2,13 @@ import 'dart:convert';
 
 import 'package:pokeapp/models/user.dart';
 
+enum UserSessionState {
+  authenticated,
+  anonymous,
+  error,
+  loading;
+}
+
 class UserSession {
   final String _token;
   final User _user;
@@ -25,12 +32,4 @@ class UserSession {
 
   String get fullName => _user.fullName;
   String get token => _token;
-}
-
-
-enum UserSessionState {
-  authenticated,
-  anonymous,
-  error,
-  loading;
 }

@@ -34,7 +34,6 @@ class Pokemon extends BasicPokemon {
   }) : _images = {PokemonState.normal: imageUrl, PokemonState.shiny: shinyUrl};
 
   factory Pokemon.fromJson(Map<String, dynamic> json) {
-    print(json);
     final type = PokemonTypes.values.byName(json['pokemon']['type']['name'].toLowerCase());
     final rankingNumber = json['rankingNumber'];
     final pokemon = json['pokemon'];

@@ -23,6 +23,14 @@ class UserSessionNotifier extends _$UserSessionNotifier {
     LocalStorageService.clear();
     state = AsyncData(null);
   }
+
+  String? getSessionToken() {
+    return switch (state) {
+      AsyncData(:final value) => value?.token,
+      AsyncError() => null,
+      AsyncLoading() => null,
+    };
+  }
 }
 
 @riverpod

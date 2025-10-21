@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokeapp/providers/favourite_pokemons.dart';
 import 'package:pokeapp/screens/home/pokemon_card.dart';
 
-List<int> pokemonIds = [4, 134, 151, 153, 576, 107, 108, 158, 201, 392];
-
 class PokemonList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,7 +18,7 @@ class PokemonList extends ConsumerWidget {
       decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
       child: Center(
         child: pokemonList.when(
-            data: (data) => ListView.builder(
+            data: (data) => data.isEmpty ? Center(child: Text("No hay pokemons favoritos")) : ListView.builder(
               scrollDirection: mainAxisDirection,
               itemCount: data.length,
               itemBuilder: (context, index) {
@@ -29,11 +27,6 @@ class PokemonList extends ConsumerWidget {
                   index: index,
                   mainAxisFlow: mainAxisDirection,
                   pokemon: data[index],
-                  moveCallback: (direction) {
-                    ref
-                      .read(favouritePokemonsProvider.notifier)
-                      .move(index, direction);
-                  },
                 );
               },
             ),
@@ -46,4 +39,5 @@ class PokemonList extends ConsumerWidget {
         ),
     );
   }
+
 }

@@ -5,6 +5,8 @@ import 'package:pokeapp/app_drawer.dart';
 import 'package:pokeapp/providers/favourite_pokemons.dart';
 import 'package:pokeapp/screens/home/pokemon_list.dart';
 
+import 'new_pokemon_form.dart';
+
 class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -18,8 +20,12 @@ class HomePage extends ConsumerWidget {
             },
             child: Icon(Icons.refresh),
           )
-        : null;
-
+        : FloatingActionButton(
+            onPressed: () {
+              showModalBottomSheet(context: context, builder: (context) => NewPokemonForm());
+            },
+            child: Icon(Icons.add),
+          );
     return Scaffold(
       appBar: pokeAppBar("Pokeapp", context),
       drawer: AppDrawer(),

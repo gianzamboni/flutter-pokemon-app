@@ -35,12 +35,7 @@ class AppDrawer extends ConsumerWidget {
                     label: "Home",
                     icon: Icons.home,
                     routeName: '/',
-                  ),
-                  DrawerLink(
-                    label: "Nuevo Pokémon",
-                    icon: Icons.add,
-                    routeName: '/new-pokemon',
-                  ),
+                  )
                 ],
               ),
               DrawerLink(

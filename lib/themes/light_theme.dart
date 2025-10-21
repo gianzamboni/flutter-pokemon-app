@@ -19,6 +19,7 @@ final lightTheme = ThemeData(
       PokemonTypes.grass: Color(0xff99ff66),
       PokemonTypes.psychic: Color(0xffffb5c5),
       PokemonTypes.water: Color(0xffb0e2ff),
+      PokemonTypes.bug: Color(0xff92a212),
     }),
   ],
 );

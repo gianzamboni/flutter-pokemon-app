@@ -24,6 +24,7 @@ class UserSession {
   }
 
   String get fullName => _user.fullName;
+  String get token => _token;
 }
 
 

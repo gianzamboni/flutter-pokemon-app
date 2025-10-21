@@ -2,37 +2,57 @@ import 'package:flutter/material.dart';
 import 'package:pokeapp/models/pokemon_states.dart';
 import 'package:pokeapp/models/pokemon_types.dart';
 
-@immutable
-class Pokemon {
+
+class BasicPokemon {
   final int _id;
   final String _name;
+
+  BasicPokemon(this._id, this._name);
+
+  factory BasicPokemon.fromJson(Map<String, dynamic> json) {
+    return BasicPokemon(json['id'], json['name']);
+  }
+
+  int get id => _id;
+  String get name => _name;
+  
+}
+
+
+class Pokemon extends BasicPokemon {
+  final int _rankingNumber;
   final PokemonTypes _type;
   final Map<PokemonState, String?> _images;
 
   Pokemon(
-    this._id,
-    this._name,
+    super._id,
+    super._name,
+    this._rankingNumber,
     this._type, {
     required String imageUrl,
     String? shinyUrl,
   }) : _images = {PokemonState.normal: imageUrl, PokemonState.shiny: shinyUrl};
 
   factory Pokemon.fromJson(Map<String, dynamic> json) {
-    final type = PokemonTypes.values.byName(json['type']['name'].toLowerCase());
+    print(json);
+    final type = PokemonTypes.values.byName(json['pokemon']['type']['name'].toLowerCase());
+    final rankingNumber = json['rankingNumber'];
+    final pokemon = json['pokemon'];
     return Pokemon(
-      json['id'],
-      json['name'],
+      pokemon['id'],
+      pokemon['name'],
+      rankingNumber,
       type,
-      imageUrl: json['picture'],
-      shinyUrl: json['shinyPicture'],
+      imageUrl: pokemon['picture'],
+      shinyUrl: pokemon['shinyPicture'],
     );
   }
-
-
 
   int get id => _id;
 
   String get name => _name;
+
+  int get rankingNumber => _rankingNumber;
 
   bool hasState(PokemonState state) {
     return _images.containsKey(state) && _images[state] != null;

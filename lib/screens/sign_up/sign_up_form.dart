@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:pokeapp/services/auth_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pokeapp/providers/services.dart';
 
-class SignUpForm extends StatefulWidget {
-  const SignUpForm({Key? key}) : super(key: key);
+class SignUpForm extends ConsumerStatefulWidget {
+  const SignUpForm({super.key});
 
   @override
-  State<SignUpForm> createState() => _SignUpFormState();
+  ConsumerState<SignUpForm> createState() => _SignUpFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _SignUpFormState extends ConsumerState<SignUpForm> {
   final _nameController = TextEditingController();
   final _surnameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _usernameController = TextEditingController();
-  
+
   bool _isLoading = false;
   String? _errorMessage;
 
   Future<void> _onSignUpPressed() async {
-    setState(() {
+    final authService = ref.read(servicesProvider).authService;
+    setState(() async {
       _isLoading = true;
       _errorMessage = null;
     });
 
     try {
-      await AuthService.signUp(
+      await authService.signUp(
         _nameController.text,
         _surnameController.text,
         _usernameController.text,
@@ -35,9 +37,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
       Navigator.pushReplacementNamed(context, '/login');
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Sign up successful, you can login now'),
-        ),
+        const SnackBar(content: Text('Sign up successful, you can login now')),
       );
     } catch (error) {
       if (!mounted) return;
@@ -139,7 +139,9 @@ class _SignUpFormState extends State<SignUpForm> {
                         width: 20,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white,
+                          ),
                         ),
                       )
                     : const Text('Sign Up'),

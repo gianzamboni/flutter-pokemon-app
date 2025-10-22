@@ -34,7 +34,7 @@ final class UserSessionNotifierProvider
 }
 
 String _$userSessionNotifierHash() =>
-    r'295c20f0af0239a01b8c170c8d7db7109c106c37';
+    r'474b20284b04dc3065c76cd08d35052bf0119149';
 
 abstract class _$UserSessionNotifier extends $AsyncNotifier<UserSession?> {
   FutureOr<UserSession?> build();
